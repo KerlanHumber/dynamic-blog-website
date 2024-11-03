@@ -46,6 +46,48 @@ function displayPosts(posts){
     });
 
 
+// Function to display a specific post
+function displayPost(postId) {
+    const storedPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+    const post = storedPosts.find(post => post.id === postId);
 
+    if (post) {
+        document.getElementById('postTitle').textContent = post.title;
+        document.getElementById('postContent').textContent = post.content;
 
+        // Add event listener to the edit button
+        document.getElementById('editButton').addEventListener('click', () => {
+            
+        });
+    } else {
+        // Handle the case where the post is not found
+        console.error('Post not found');
+    }
+}
+
+// Get the post ID from the URL
+const urlParams = new URLSearchParams(window.location.search);
+const postId = urlParams.get('id');
+
+// Display the post
+displayPost(postId);
+
+function editPost(postId) {
+    const storedPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+    const postIndex = storedPosts.findIndex(post => post.id === postId);
+
+    if (postIndex !== -1) {
+        // Replace the title and content with the new values
+        storedPosts[postIndex].title = document.getElementById('postTitle').textContent;
+        storedPosts[postIndex].content = document.getElementById('postContent').textContent
+
+        // Save the updated posts back to local storage
+        localStorage.setItem('blogPosts', JSON.stringify(storedPosts));
+
+        // Redirect to the post page or display a success message
+        window.location.href = `post.html?id=${postId}`;
+       // Or display a success message:
+       // alert('Post updated successfully!');
+    }
+}
     
