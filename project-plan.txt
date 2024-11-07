@@ -1,5 +1,21 @@
+Assignment 3: Dynamic Blog Site plan
+
 For this project, I will be creating and developing a dynamic blog website. 
 From this, I will learn how to: 
 Develop a dynamic, multi-page blog website with CRUD functionality for blog posts. 
 Use JavaScript to manage posts within the browser's local storage. 
 Use Git to track changes and GitHub to host, collaborate, and submit my work.
+
+Project Files
+index.html
+new-post.html
+post.html
+style.css
+script.js
+
+CRUD Operations
+Create : add new posts with "new-post.html"
+Read: displys all posts in "index.html"
+Update: edit posts with "post.html"
+Delete: delete posts from "post.html"
+

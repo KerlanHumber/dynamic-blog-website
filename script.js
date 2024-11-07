@@ -5,19 +5,16 @@ function displayPost(postId) {
   const storedPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
   const post = storedPosts.find(post => post.id === postId);
 
-  console.log("Stored Posts:", storedPosts);
- 
-
   if (post) {
     document.getElementById('postTitle').textContent = post.title;
     document.getElementById('postContent').textContent = post.content;
 
-    // Add event listener to the edit button
+    // Added event listener to the edit button
     document.getElementById('editButton').addEventListener('click', () => {
-     
+
     });
 
-    // Add event listener to the delete button
+    // Added event listener to the delete button
     document.getElementById('deleteButton').addEventListener('click', () => {
       const confirmed = confirm('Are you sure you want to delete this post?');
       if (confirmed) {
@@ -27,8 +24,8 @@ function displayPost(postId) {
       }
     });
   } else {
-    // Handle in the case where the post is not found
-    console.error('Post not found', postId);
+    // Handle the case where the post is not found
+    console.error('Post not found');
   }
 }
 
@@ -39,7 +36,6 @@ function displayPosts(posts) {
 
     const link = document.createElement('a');
     link.href = `post.html?id=${post.id}`; 
-    link.textContent = post.title;
     listItem.appendChild(link);
 
     postList.appendChild(listItem);
@@ -69,3 +65,11 @@ const postId = urlParams.get('id');
 
 // Display the post (assuming you only need one displayPosts function)
 displayPost(postId);
+
+
+// Function to save a new post from new-post.html
+function saveNewPost(event) {
+    event.preventDefault();
+    console.log("Form submitted"); // This is to make sure the function is triggered via the console
+}
+
