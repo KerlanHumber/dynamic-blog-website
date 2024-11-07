@@ -1,5 +1,27 @@
 const storedPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
 
+
+
+// Function to save post to localStorage and display welcome message
+function savePostToLocalStorage(post) {
+    // Retrieve existing posts from local storage
+    const existingPosts = JSON.parse(localStorage.getItem('posts')) || [];
+  
+    // Add the new post to the array
+    existingPosts.push(post);
+  
+    // Save the updated array back to local storage
+    localStorage.setItem('posts', JSON.stringify(existingPosts));
+};
+
+const newPost = {
+    id: Date.now(), // Unique identifier
+    title: 'My New Post',
+    content: 'This is the content of my new post.'
+};
+
+savePostToLocalStorage(newPost);
+
 // Function to display a specific post
 function displayPost(postId) {
   const storedPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
@@ -63,7 +85,7 @@ function editPost(postId) {
 const urlParams = new URLSearchParams(window.search);
 const postId = urlParams.get('id');
 
-// Display the post (assuming you only need one displayPosts function)
+// Display the post 
 displayPost(postId);
 
 
