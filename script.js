@@ -1,97 +1,76 @@
-const storedPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
-
-
-
-// Function to save post to localStorage and display welcome message
-function savePostToLocalStorage(post) {
-    // Retrieve existing posts from local storage
-    const existingPosts = JSON.parse(localStorage.getItem('posts')) || [];
-  
-    // Add the new post to the array
-    existingPosts.push(post);
-  
-    // Save the updated array back to local storage
-    localStorage.setItem('posts', JSON.stringify(existingPosts));
-};
-
-const newPost = {
-    id: Date.now(), // Unique identifier
-    title: 'My New Post',
-    content: 'This is the content of my new post.'
-};
-
-savePostToLocalStorage(newPost);
-
-// Function to display a specific post
-function displayPost(postId) {
-  const storedPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
-  const post = storedPosts.find(post => post.id === postId);
-
-  if (post) {
-    document.getElementById('postTitle').textContent = post.title;
-    document.getElementById('postContent').textContent = post.content;
-
-    // Added event listener to the edit button
-    document.getElementById('editButton').addEventListener('click', () => {
-
-    });
-
-    // Added event listener to the delete button
-    document.getElementById('deleteButton').addEventListener('click', () => {
-      const confirmed = confirm('Are you sure you want to delete this post?');
-      if (confirmed) {
-        const filteredPosts = storedPosts.filter(post => post.id !== postId);
-        localStorage.setItem('blogPosts', JSON.stringify(filteredPosts));
-        window.location.href = 'index.html'; // Redirect to the index page
-      }
-    });
-  } else {
-    // Handle the case where the post is not found
-    console.error('Post not found');
-  }
+function getPosts() {
+    return JSON.parse(localStorage.getItem('posts')) || [];
 }
 
-function displayPosts(posts) {
-  const postList = document.getElementById('postList');
-  posts.forEach(post => {
-    const listItem = document.createElement('li');
-
-    const link = document.createElement('a');
-    link.href = `post.html?id=${post.id}`; 
-    listItem.appendChild(link);
-
-    postList.appendChild(listItem);
-  });
+function savePosts(posts) {
+    localStorage.setItem('posts', JSON.stringify(posts));
 }
 
-function editPost(postId) {
-  const storedPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
-  const postIndex = storedPosts.findIndex(post => post.id === postId);
-
-  if (postIndex !== -1) {
-    // Replace the title and content with the new values
-    storedPosts[postIndex].title = document.getElementById('postTitle').textContent;
-    storedPosts[postIndex].content = document.getElementById('postContent').textContent
-
-    // Save the updated posts back to local storage
-    localStorage.setItem('blogPosts', JSON.stringify(storedPosts));
-
-    // Redirect to the post page or display a success message
-    window.location.href = `post.html?id=${postId}`;
-  }
+function displayPosts() {
+    const posts = getPosts();
+    const container = document.getElementById('posts-container');
+    container.innerHTML = '';
+    posts.forEach((post, index) => {
+    const postDiv = document.createElement('div');
+    postDiv.innerHTML = `<h2>${post.title}</h2>
+        <p>${post.content}</p>
+        <a href="post.html?id=${index}">View/Edit Post</a>`;
+    container.appendChild(postDiv);
+});
 }
 
-// Get the post ID from the URL
-const urlParams = new URLSearchParams(window.search);
-const postId = urlParams.get('id');
-
-// Display the post 
-displayPost(postId);
-
-
-// Function to save a new post from new-post.html
-function saveNewPost(event) {
+function createPost(event) {
     event.preventDefault();
-    console.log("Form submitted"); // This is to make sure the function is triggered via the console
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
+    
+    const posts = getPosts();
+    posts.push({ title, content });
+    savePosts(posts);
+
+    window.location.href = 'index.html';
 }
 
+function loadPost() {
+const params = new URLSearchParams(window.location.search);
+const postId = params.get('id');
+const posts = getPosts();
+
+if (postId !== null && posts[postId]) {
+  document.getElementById('title').value = posts[postId].title;
+  document.getElementById('content').value = posts[postId].content;
+} else {
+  alert('Post not found!');
+  window.location.href = 'index.html';
+}
+}
+
+function updatePost(event) {
+event.preventDefault();
+const params = new URLSearchParams(window.location.search);
+const postId = params.get('id');
+
+const title = document.getElementById('title').value;
+const content = document.getElementById('content').value;
+
+const posts = getPosts();
+if (postId !== null && posts[postId]) {
+  posts[postId] = { title, content };
+  savePosts(posts);
+  alert('Post updated!');
+  window.location.href = 'index.html';
+}
+}
+
+function deletePost() {
+const params = new URLSearchParams(window.location.search);
+const postId = params.get('id');
+
+const posts = getPosts();
+if (postId !== null && posts[postId]) {
+  posts.splice(postId, 1);
+  savePosts(posts);
+  alert('Post deleted!');
+  window.location.href = 'index.html';
+}
+}
