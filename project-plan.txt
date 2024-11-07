@@ -14,8 +14,8 @@ style.css
 script.js
 
 CRUD Operations
-Create : add new posts with "new-post.html"
-Read: displys all posts in "index.html"
-Update: edit posts with "post.html"
-Delete: delete posts from "post.html"
+Create : Add new posts with "new-post.html"
+Read: Display all posts in "index.html"
+Update: Edit posts with "post.html"
+Delete: Delete posts from "post.html"
 
