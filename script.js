@@ -1,3 +1,5 @@
+// Function to get and save posts into the local storage
+
 function getPosts() {
     return JSON.parse(localStorage.getItem('posts')) || [];
 }
@@ -6,6 +8,7 @@ function savePosts(posts) {
     localStorage.setItem('posts', JSON.stringify(posts));
 }
 
+// Function to display posts
 function displayPosts() {
     const posts = getPosts();
     const container = document.getElementById('posts-container');
@@ -19,6 +22,7 @@ function displayPosts() {
 });
 }
 
+// Function to create posts
 function createPost(event) {
     event.preventDefault();
     const title = document.getElementById('title').value;
@@ -31,6 +35,7 @@ function createPost(event) {
     window.location.href = 'index.html';
 }
 
+// Function to load posts
 function loadPost() {
 const params = new URLSearchParams(window.location.search);
 const postId = params.get('id');
@@ -45,6 +50,7 @@ if (postId !== null && posts[postId]) {
 }
 }
 
+//Function to edit/update posts
 function updatePost(event) {
 event.preventDefault();
 const params = new URLSearchParams(window.location.search);
@@ -62,6 +68,7 @@ if (postId !== null && posts[postId]) {
 }
 }
 
+// Function to delete posts
 function deletePost() {
 const params = new URLSearchParams(window.location.search);
 const postId = params.get('id');
