@@ -20,3 +20,23 @@ a {
     text-decoration: none;
     color: blue;
 }
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+
+    body {
+        margin: 10px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    ul {
+        padding-left: 10px;
+    }
+
+    li {
+        margin-bottom: 5px;
+    }
+}
